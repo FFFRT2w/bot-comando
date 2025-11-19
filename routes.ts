@@ -144,7 +144,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ✅ Endpoint para buscar bot (por nome, URL ou Client ID)
+  // Buscar bot por nome, URL ou Client ID
   router.post("/api/bots/search", async (req, res) => {
     try {
       const { nome, url, clientId } = req.body;
@@ -169,7 +169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ✅ Endpoint para atualizar saúde do bot (fazer ping)
+  // Fazer ping no bot e atualizar saúde
   router.post("/api/bots/:botId/ping", async (req, res) => {
     try {
       const { botId } = req.params;
