@@ -3,12 +3,9 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { pingService } from "./ping-service";
 import { insertBotSchema, updateBotSchema } from "@shared/schema";
-import { Router } from "express";
 import { db } from "./db";
 import { bots } from "@shared/schema";
 import { eq } from "drizzle-orm";
-
-const router = Router();
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/health", async (req, res) => {
@@ -144,8 +141,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Buscar bot por nome, URL ou Client ID
-  router.post("/api/bots/search", async (req, res) => {
+  // ✅ Buscar bot por nome, URL ou Client ID (para Discord Bot)
+  app.post("/api/bots/search", async (req, res) => {
     try {
       const { nome, url, clientId } = req.body;
 
@@ -169,8 +166,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Fazer ping no bot e atualizar saúde
-  router.post("/api/bots/:botId/ping", async (req, res) => {
+  // ✅ Fazer ping no bot e atualizar saúde (para Discord Bot)
+  app.post("/api/bots/:botId/ping", async (req, res) => {
     try {
       const { botId } = req.params;
       const bot = await db.select().from(bots).where(eq(bots.id, botId)).limit(1);
