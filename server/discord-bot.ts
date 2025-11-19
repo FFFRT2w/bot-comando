@@ -239,15 +239,14 @@ client.on("interactionCreate", async (interaction) => {
 // Funções para chamar seu backend
 async function buscarBot(filtros) {
   try {
-    // Substitua pela URL real do seu backend
-    const response = await fetch("http://localhost:3000/api/bots/search", {
+    const baseUrl = process.env.API_URL || "http://localhost:5000";
+    const response = await fetch(`${baseUrl}/api/bots/search`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(filtros),
     });
 
     if (!response.ok) return null;
-
     return await response.json();
   } catch (error) {
     console.error("❌ Erro ao buscar bot:", error);
@@ -257,8 +256,8 @@ async function buscarBot(filtros) {
 
 async function atualizarSaudeBot(botId) {
   try {
-    // Substitua pela URL real do seu backend
-    const response = await fetch(`http://localhost:3000/api/bots/${botId}/ping`, {
+    const baseUrl = process.env.API_URL || "http://localhost:5000";
+    const response = await fetch(`${baseUrl}/api/bots/${botId}/ping`, {
       method: "POST",
     });
 
