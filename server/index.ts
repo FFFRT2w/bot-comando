@@ -1,7 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import routes from "./routes";
 import "./discord-bot";
 
 const app = express();
@@ -11,6 +10,7 @@ declare module 'http' {
     rawBody: unknown
   }
 }
+
 app.use(express.json({
   verify: (req, _res, buf) => {
     req.rawBody = buf;
@@ -48,8 +48,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(routes);
-
 (async () => {
   // Validate BOT_TOKEN is set
   if (!process.env.BOT_TOKEN) {
@@ -58,7 +56,7 @@ app.use(routes);
     log("✅ BOT_TOKEN is configured");
   }
 
-  // ✅ Chama a função para registrar as rotas
+  // ✅ Registra as rotas
   const httpServer = await registerRoutes(app);
 
   const PORT = process.env.PORT || 5000;
