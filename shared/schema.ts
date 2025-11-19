@@ -14,6 +14,8 @@ export const bots = pgTable("bots", {
   status: text("status").notNull().default("pending"),
   lastPing: timestamp("last_ping"),
   responseTime: integer("response_time"),
+  latency: integer("latency"),
+  health: integer("health").notNull().default(100),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
 });
