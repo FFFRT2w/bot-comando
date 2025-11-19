@@ -1,8 +1,8 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import routes from "./routes";
 import "./discord-bot";
-import express, { type Request, Response, NextFunction } from "express";
 
 const app = express();
 
@@ -47,6 +47,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(routes);
 
 (async () => {
   // Validate BOT_TOKEN is set
